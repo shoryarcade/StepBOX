@@ -1,0 +1,7 @@
+#pragma once
+
+#define GAMEPAD_NUMBER_OF_PINS 23
+#define GAMEPAD_NUMBER_OF_BUTTONS 32
+#define GAMEPAD_MANUFACTURER "Shorywood"
+#define GAMEPAD_PRODUCT "StepBOX Controller"
+#define GAMEPAD_SERIAL "008086"

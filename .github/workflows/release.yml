@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: debian-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Update Packages
+        run: |
+          apt update -y
+          apt install -y cmake g++ gcc-arm-none-eabi libnewlib-arm-none-eabi
+          apt install -y git python3
+
+      - name: Compile Firmware
+        run: mkdir build; cd build; cmake .. && make
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/src/stepbox.uf2
+          asset_name: StepBOX-RaspberryPiPico_${{ steps.tagName.outputs.tag }}.uf2
+          asset_content_type: application/octet-stream
