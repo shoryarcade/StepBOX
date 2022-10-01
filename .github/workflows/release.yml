@@ -40,5 +40,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build/src/stepbox.uf2
-          asset_name: StepBOX-RaspberryPiPico_${{ steps.tagName.outputs.tag }}.uf2
+          asset_name: StepBOX-RaspberryPiPico_${{ github.ref_name }}.uf2
           asset_content_type: application/octet-stream
