@@ -14,7 +14,6 @@ jobs:
 
       - name: Update Packages
         run: |
-          apt update -y
           apt install -y cmake g++ gcc-arm-none-eabi libnewlib-arm-none-eabi
           apt install -y git python3
 
