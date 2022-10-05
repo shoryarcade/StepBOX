@@ -22,10 +22,6 @@
  * SOFTWARE.
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
 #include "bsp/board.h"
 #include "gamepad.h"
 
@@ -42,7 +38,6 @@ int main(void)
     {
         // tinyusb
         tud_task();
-
         gamepad->alive();
 
         gamepad->fetch();
