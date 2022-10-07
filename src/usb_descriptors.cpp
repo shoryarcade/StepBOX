@@ -24,7 +24,6 @@
  */
 
 #include "tusb.h"
-#include "usb_descriptors.h"
 
 #include "stepbox.h"
 
@@ -40,6 +39,8 @@
 
 #define USB_VID 0xCafe
 #define USB_BCD 0x0200
+
+#define REPORT_ID_GAMEPAD 1
 
 //--------------------------------------------------------------------+
 // Device Descriptors
@@ -77,7 +78,7 @@ uint8_t const *tud_descriptor_device_cb(void)
 
 uint8_t const desc_hid_report[] =
     {
-        TUD_HID_REPORT_DESC_GAMEPAD(HID_REPORT_ID(REPORT_ID_GAMEPAD))};
+        GAMEPAD_HID_REPORT_DESCRIPTION(HID_REPORT_ID(REPORT_ID_GAMEPAD))};
 
 // Invoked when received GET HID REPORT DESCRIPTOR
 // Application return pointer to descriptor
