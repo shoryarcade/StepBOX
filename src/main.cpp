@@ -23,25 +23,36 @@
  */
 
 #include "bsp/board.h"
+
+#include "board.h"
 #include "gamepad.h"
+#include "keyboard.h"
 
 int main(void)
 {
-    board_init();
-    tusb_init();
+    Board *board = new Board();
 
     Gamepad *gamepad = new Gamepad();
-
     gamepad->setup();
+
+    Keyboard *keyboard;
+    bool keyboardMode = board->keyboardMode();
+
+    if (keyboardMode)
+    {
+        board_led_on();
+
+        keyboard = new Keyboard();
+        keyboard->setup();
+    }
 
     while (true)
     {
-        // tinyusb
-        tud_task();
-        gamepad->alive();
+        board->pooling();
+        gamepad->listen();
 
-        gamepad->fetch();
-        gamepad->report();
+        if (keyboardMode)
+            keyboard->listen();
     }
 
     return 0;

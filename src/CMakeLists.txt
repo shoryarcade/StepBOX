@@ -3,8 +3,10 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(stepbox)
 
 target_sources(stepbox PUBLIC
+        ${CMAKE_CURRENT_LIST_DIR}/board.cpp
         ${CMAKE_CURRENT_LIST_DIR}/device.cpp
         ${CMAKE_CURRENT_LIST_DIR}/gamepad.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/keyboard.cpp
         ${CMAKE_CURRENT_LIST_DIR}/main.cpp
         ${CMAKE_CURRENT_LIST_DIR}/usb_descriptors.cpp
         )

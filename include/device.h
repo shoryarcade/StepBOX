@@ -1,11 +1,19 @@
 #pragma once
 
-#define BOARD_PIN_OFFSET 2
-#define BOARD_LAST_PIN 27
+#define GAMEPAD_MANUFACTURER "Shorywood"
+#define GAMEPAD_PRODUCT "StepBOX Controller"
+#define GAMEPAD_SERIAL "008086"
 
 class Device
 {
 public:
-    Device();
-    void alive();
+    Device(){};
+
+    bool alive();
+    void listen();
+
+    virtual void setup() = 0;
+
+    virtual void fetch() = 0;
+    virtual void report() = 0;
 };

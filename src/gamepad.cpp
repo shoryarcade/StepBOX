@@ -1,8 +1,8 @@
-#include "stepbox.h"
-#include "gamepad.h"
-
 #include "tusb.h"
 #include "pico/stdlib.h"
+
+#include "gamepad.h"
+#include "usb_descriptors.h"
 
 void Gamepad::setup()
 {
@@ -36,10 +36,10 @@ void Gamepad::fetch()
         | ((values & (1 << 13) ? BUTTON_12 : 0))
         | ((values & (1 << 14) ? BUTTON_13 : 0))
 
-        | ((values & (1 << 26) ? BUTTON_TOUCH : 0)) // Touchpad
-        | ((values & (1 << 27) ? BUTTON_SHARE : 0)) // Share
-        | ((values & (1 << 16) ? BUTTON_SELECT : 0)) // Select
-        | ((values & (1 << 27) ? BUTTON_START : 0)) // Start
+        | ((values & (1 << 26) ? BUTTON_TOUCH : 0))
+        | ((values & (1 << 27) ? BUTTON_SHARE : 0))
+        | ((values & (1 << 16) ? BUTTON_SELECT : 0))
+        | ((values & (1 << 27) ? BUTTON_START : 0))
     ;
     // clang-format on
 }
@@ -63,7 +63,7 @@ void Gamepad::report()
     report.hat = hats;
     report.buttons = buttons;
 
-    tud_hid_report(1, &report, sizeof(report));
+    tud_hid_report(REPORT_ID_GAMEPAD, &report, sizeof(report));
 }
 
 bool Gamepad::pressedButton(uint32_t button)

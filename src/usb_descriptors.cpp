@@ -24,8 +24,9 @@
  */
 
 #include "tusb.h"
+#include "usb_descriptors.h"
 
-#include "stepbox.h"
+#include "gamepad.h"
 
 /* A combination of interfaces must have a unique product id, since PC will save device driver after the first plug.
  * Same VID/PID with different interface e.g MSC (first), then CDC (later) will possibly cause system error on PC.
@@ -34,13 +35,12 @@
  *   [MSB]         HID | MSC | CDC          [LSB]
  */
 #define _PID_MAP(itf, n) ((CFG_TUD_##itf) << (n))
-#define USB_PID (0x4000 | _PID_MAP(CDC, 0) | _PID_MAP(MSC, 1) | _PID_MAP(HID, 2) | \
-                 _PID_MAP(MIDI, 3) | _PID_MAP(VENDOR, 4))
+#define USB_PID                                                        \
+    (0x4000 | _PID_MAP(CDC, 0) | _PID_MAP(MSC, 1) | _PID_MAP(HID, 2) | \
+     _PID_MAP(MIDI, 3) | _PID_MAP(VENDOR, 4))
 
 #define USB_VID 0xCafe
 #define USB_BCD 0x0200
-
-#define REPORT_ID_GAMEPAD 1
 
 //--------------------------------------------------------------------+
 // Device Descriptors
@@ -78,7 +78,9 @@ uint8_t const *tud_descriptor_device_cb(void)
 
 uint8_t const desc_hid_report[] =
     {
-        GAMEPAD_HID_REPORT_DESCRIPTION(HID_REPORT_ID(REPORT_ID_GAMEPAD))};
+        TUD_HID_REPORT_DESC_KEYBOARD(HID_REPORT_ID(REPORT_ID_KEYBOARD)),
+        HID_REPORT_DESCRIPTION_GAMEPAD(HID_REPORT_ID(REPORT_ID_GAMEPAD)),
+};
 
 // Invoked when received GET HID REPORT DESCRIPTOR
 // Application return pointer to descriptor
@@ -180,9 +182,26 @@ char const *string_desc_arr[] =
         GAMEPAD_MANUFACTURER,
         GAMEPAD_PRODUCT,
         GAMEPAD_SERIAL,
+        "Button 1",
+        "Button 2",
+        "Button 3",
+        "Button 4",
+        "Button 5",
+        "Button 6",
+        "Button 7",
+        "Button 8",
+        "Button 9",
+        "Button 10",
+        "Button 11",
+        "Button 12",
+        "Button 13",
+        "Touch",
+        "Share",
+        "Select",
+        "Start",
 };
 
-static uint16_t _desc_str[32];
+static uint16_t _desc_str[64];
 
 // Invoked when received GET STRING DESCRIPTOR request
 // Application return pointer to descriptor, whose contents must exist long enough for transfer to complete
@@ -209,8 +228,8 @@ uint16_t const *tud_descriptor_string_cb(uint8_t index, uint16_t langid)
 
         // Cap at max char
         chr_count = strlen(str);
-        if (chr_count > 31)
-            chr_count = 31;
+        if (chr_count > 63)
+            chr_count = 63;
 
         // Convert ASCII string into UTF-16
         for (uint8_t i = 0; i < chr_count; i++)
