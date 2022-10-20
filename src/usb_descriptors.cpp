@@ -35,12 +35,10 @@
  *   [MSB]         HID | MSC | CDC          [LSB]
  */
 #define _PID_MAP(itf, n) ((CFG_TUD_##itf) << (n))
-#define USB_PID                                                        \
-    (0x4000 | _PID_MAP(CDC, 0) | _PID_MAP(MSC, 1) | _PID_MAP(HID, 2) | \
-     _PID_MAP(MIDI, 3) | _PID_MAP(VENDOR, 4))
+#define USB_PID (0x4000 | _PID_MAP(CDC, 0) | _PID_MAP(VENDOR, 1) | _PID_MAP(MSC, 2))
 
-#define USB_VID 0xCafe
 #define USB_BCD 0x0200
+#define USB_VID 0x0f0d
 
 //--------------------------------------------------------------------+
 // Device Descriptors
@@ -78,8 +76,8 @@ uint8_t const *tud_descriptor_device_cb(void)
 
 uint8_t const desc_hid_report[] =
     {
-        TUD_HID_REPORT_DESC_KEYBOARD(HID_REPORT_ID(REPORT_ID_KEYBOARD)),
         HID_REPORT_DESCRIPTION_GAMEPAD(HID_REPORT_ID(REPORT_ID_GAMEPAD)),
+        TUD_HID_REPORT_DESC_KEYBOARD(HID_REPORT_ID(REPORT_ID_KEYBOARD)),
 };
 
 // Invoked when received GET HID REPORT DESCRIPTOR
@@ -182,23 +180,6 @@ char const *string_desc_arr[] =
         GAMEPAD_MANUFACTURER,
         GAMEPAD_PRODUCT,
         GAMEPAD_SERIAL,
-        "Button 1",
-        "Button 2",
-        "Button 3",
-        "Button 4",
-        "Button 5",
-        "Button 6",
-        "Button 7",
-        "Button 8",
-        "Button 9",
-        "Button 10",
-        "Button 11",
-        "Button 12",
-        "Button 13",
-        "Touch",
-        "Share",
-        "Select",
-        "Start",
 };
 
 static uint16_t _desc_str[64];

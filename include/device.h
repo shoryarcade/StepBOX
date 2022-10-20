@@ -2,7 +2,7 @@
 
 #define GAMEPAD_MANUFACTURER "Shorywood"
 #define GAMEPAD_PRODUCT "StepBOX Controller"
-#define GAMEPAD_SERIAL "008086"
+#define GAMEPAD_SERIAL "123456"
 
 class Device
 {
