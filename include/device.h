@@ -1,6 +1,6 @@
 #pragma once
 
-#define GAMEPAD_MANUFACTURER "Shorywood"
+#define GAMEPAD_MANUFACTURER "Shory"
 #define GAMEPAD_PRODUCT "StepBOX Controller"
 #define GAMEPAD_SERIAL "123456"
 

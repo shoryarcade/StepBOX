@@ -1,11 +1,20 @@
 #include "tusb.h"
 #include "pico/stdlib.h"
 
+#include "board.h"
 #include "gamepad.h"
 #include "usb_descriptors.h"
 
 void Gamepad::setup()
 {
+    pin_pair pins_l = {BOARD_LEFT_ENCODER_OUT_A, BOARD_LEFT_ENCODER_OUT_B};
+    pin_pair pins_r = {BOARD_RIGHT_ENCODER_OUT_A, BOARD_RIGHT_ENCODER_OUT_B};
+
+    enc_l = new Encoder(pio0, 0, pins_l, BOARD_LAST_PIN);
+    enc_r = new Encoder(pio1, 0, pins_r, BOARD_LAST_PIN);
+
+    enc_l->init();
+    enc_r->init();
 }
 
 void Gamepad::fetch()
@@ -15,13 +24,13 @@ void Gamepad::fetch()
     uint32_t values = ~gpio_get_all();
 
     hats = 0
-        | ((values & (1 << 21) ? BUTTON_UP : 0))
-        | ((values & (1 << 20) ? BUTTON_DOWN : 0))
-        | ((values & (1 << 19) ? BUTTON_LEFT : 0))
-        | ((values & (1 << 18) ? BUTTON_RIGHT : 0))
+        // | ((values & (1 << 17) ? BUTTON_UP : 0))
+        // | ((values & (1 << 16) ? BUTTON_DOWN : 0))
+        // | ((values & (1 << 14) ? BUTTON_LEFT : 0))
+        // | ((values & (1 << 15) ? BUTTON_RIGHT : 0))
     ;
 
-    buttons = 0
+     buttons = 0
         | ((values & (1 << 2) ? BUTTON_01 : 0))
         | ((values & (1 << 3) ? BUTTON_02 : 0))
         | ((values & (1 << 4) ? BUTTON_03 : 0))
@@ -30,16 +39,16 @@ void Gamepad::fetch()
         | ((values & (1 << 7) ? BUTTON_06 : 0))
         | ((values & (1 << 8) ? BUTTON_07 : 0))
         | ((values & (1 << 9) ? BUTTON_08 : 0))
-        | ((values & (1 << 10) ? BUTTON_09 : 0))
-        | ((values & (1 << 11) ? BUTTON_10 : 0))
-        | ((values & (1 << 12) ? BUTTON_11 : 0))
-        | ((values & (1 << 13) ? BUTTON_12 : 0))
-        | ((values & (1 << 14) ? BUTTON_13 : 0))
+        | ((values & (1 << 22) ? BUTTON_09 : 0))
+        | ((values & (1 << 10) ? BUTTON_10 : 0))
+        | ((values & (1 << 11) ? BUTTON_11 : 0))
+        | ((values & (1 << 12) ? BUTTON_12 : 0))
+        | ((values & (1 << 13) ? BUTTON_13 : 0))
 
-        | ((values & (1 << 26) ? BUTTON_TOUCH : 0))
-        | ((values & (1 << 27) ? BUTTON_SHARE : 0))
-        | ((values & (1 << 16) ? BUTTON_SELECT : 0))
-        | ((values & (1 << 27) ? BUTTON_START : 0))
+        | ((values & (1 << 21) ? BUTTON_TOUCH : 0))
+        | ((values & (1 << 20) ? BUTTON_SHARE : 0))
+        | ((values & (1 << 19) ? BUTTON_SELECT : 0))
+        | ((values & (1 << 18) ? BUTTON_START : 0))
     ;
     // clang-format on
 }
@@ -53,13 +62,11 @@ void Gamepad::report()
         {
             .x = 0,
             .y = 0,
-            .z = 0,
-            .rz = 0,
-            .rx = 0,
-            .ry = 0,
             .hat = 0,
             .buttons = 0};
 
+    report.x = enc_l->count();
+    report.y = enc_r->count();
     report.hat = hats;
     report.buttons = buttons;
 

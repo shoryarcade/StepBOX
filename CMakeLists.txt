@@ -6,4 +6,5 @@ include(pico_sdk_import.cmake)
 project(stepbox)
 
 pico_sdk_init()
+add_subdirectory(drivers/encoder)
 add_subdirectory(src)

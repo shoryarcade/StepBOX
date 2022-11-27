@@ -11,7 +11,8 @@ Board::Board()
     // Initialize GPIO from 02-27 (except for the internal 25 one)
     for (int pin = BOARD_PIN_OFFSET; pin <= BOARD_LAST_PIN; pin++)
     {
-        if (pin != PICO_DEFAULT_LED_PIN)
+        if (
+            pin != PICO_DEFAULT_LED_PIN && pin != BOARD_LEFT_ENCODER_OUT_A && pin != BOARD_LEFT_ENCODER_OUT_B && pin != BOARD_RIGHT_ENCODER_OUT_A && pin != BOARD_RIGHT_ENCODER_OUT_B)
         {
             gpio_init(pin);
             gpio_set_dir(pin, GPIO_IN);

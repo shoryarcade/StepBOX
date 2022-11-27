@@ -97,14 +97,14 @@ We get around this problem by implementing a composite-device that behaves both 
 
 ## Installation
 
-Prebuilt `uf2` files are available in the [Releases](https://github.com/shorywood/StepBOX/releases) section for the following boards and controllers:
+Prebuilt `uf2` files are available in the [Releases](https://github.com/shorygame/StepBOX/releases) section for the following boards and controllers:
 
 - ~~[Shory Board]()~~ (**not available yet**)
 - [Raspberry Pi Pico]() and other RP2040 boards ([wiring diagram]())
 
 Instructions for a Raspberry Pi Pico.
 
-1. Download the latest `StepBOX.uf2` file from the [Releases](https://github.com/shorywood/StepBOX/releases) section for your board (e.g. `StepBOX-RaspberryPiPico.uf2` for the Raspberry Pi Pico);
+1. Download the latest `StepBOX.uf2` file from the [Releases](https://github.com/shorygame/StepBOX/releases) section for your board (e.g. `StepBOX-RaspberryPiPico.uf2` for the Raspberry Pi Pico);
 1. Unplug your Pico;
 1. Hold the BOOTSEL button on the Pico and plug into your computer. A new removable drive named `RPI-RP2` should appear in your file explorer;
 1. Drag and drop the `StepBOX.uf2` file into the removable drive. This will flash the board.
@@ -112,4 +112,4 @@ Instructions for a Raspberry Pi Pico.
 
 ## Support
 
-If you like to discuss features, issues or anything else related to Shorywood products please [create an issue](https://github.com/shorywood/StepBOX/issues/new) or join the [Shorywood Discord Channel](https://discord.gg/kGekqHdRrn).
+If you like to discuss features, issues or anything else related to Shory products please [create an issue](https://github.com/shorygame/StepBOX/issues/new) or join the [Shory Discord Channel](https://discord.gg/kGekqHdRrn).
