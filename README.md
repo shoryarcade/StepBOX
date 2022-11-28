@@ -100,7 +100,7 @@ We get around this problem by implementing a composite-device that behaves both 
 Prebuilt `uf2` files are available in the [Releases](https://github.com/shorygame/StepBOX/releases) section for the following boards and controllers:
 
 - ~~[Shory Board]()~~ (**not available yet**)
-- [Raspberry Pi Pico]() and other RP2040 boards ([wiring diagram]())
+- [Raspberry Pi Pico]() and other RP2040 boards
 
 Instructions for a Raspberry Pi Pico.
 
@@ -109,6 +109,10 @@ Instructions for a Raspberry Pi Pico.
 1. Hold the BOOTSEL button on the Pico and plug into your computer. A new removable drive named `RPI-RP2` should appear in your file explorer;
 1. Drag and drop the `StepBOX.uf2` file into the removable drive. This will flash the board.
 1. The board is now running the StepBOX firmware and will appear as a controller on your computer.
+
+## Wiring Diagram
+
+![wiring diagram](assets/rp2040-diagram.svg)
 
 ## Support
 
