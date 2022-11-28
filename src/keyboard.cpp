@@ -10,13 +10,13 @@ void Keyboard::setup()
 
 void Keyboard::fetch()
 {
-    keys = ~gpio_get_all();
+    values = ~gpio_get_all();
 
     // clang-format off
-    pressedB1  = !gpio_get(2);
-    pressedB2  = !gpio_get(3);
-    pressedB5  = !gpio_get(6);
-    pressedB6  = !gpio_get(7);
+    pressedB10  = !gpio_get(10);
+    pressedB11  = !gpio_get(11);
+    pressedB12  = !gpio_get(12);
+    pressedB13  = !gpio_get(13);
     // clang-format on
 }
 
@@ -25,15 +25,15 @@ void Keyboard::report()
     if (!tud_hid_ready())
         return;
 
-    if (keys != 0)
+    if (values != 0)
     {
         uint8_t keycode[6] = {0};
 
         // clang-format off
-        if (pressedB1)  keycode[0] = HID_KEY_W;
-        if (pressedB2)  keycode[1] = HID_KEY_E;
-        if (pressedB5)  keycode[2] = HID_KEY_O;
-        if (pressedB6)  keycode[3] = HID_KEY_P;
+        if (pressedB10)  keycode[0] = HID_KEY_W;
+        if (pressedB11)  keycode[1] = HID_KEY_E;
+        if (pressedB12)  keycode[2] = HID_KEY_O;
+        if (pressedB13)  keycode[3] = HID_KEY_P;
 
         tud_hid_keyboard_report(REPORT_ID_KEYBOARD, 0, keycode);
         // clang-format on

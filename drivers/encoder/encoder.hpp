@@ -9,7 +9,7 @@ using namespace pimoroni;
 namespace encoder
 {
   static constexpr float MMME_CPR = 12.0f;
-  static constexpr float ROTARY_CPR = BOARD_ENCODER_PPR * 4;
+  static constexpr float ROTARY_CPR = 24.0f;
 
   class Encoder
   {

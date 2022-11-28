@@ -9,6 +9,8 @@ class Device
 public:
     Device(){};
 
+    uint32_t values;
+
     bool alive();
     void listen();
 

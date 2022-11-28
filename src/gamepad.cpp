@@ -7,11 +7,18 @@
 
 void Gamepad::setup()
 {
-    pin_pair pins_l = {BOARD_LEFT_ENCODER_OUT_A, BOARD_LEFT_ENCODER_OUT_B};
-    pin_pair pins_r = {BOARD_RIGHT_ENCODER_OUT_A, BOARD_RIGHT_ENCODER_OUT_B};
+    pin_pair pins_l = {
+        BOARD_LEFT_ENCODER_OUT_A,
+        BOARD_LEFT_ENCODER_OUT_B,
+    };
 
-    enc_l = new Encoder(pio0, 0, pins_l, BOARD_LAST_PIN);
-    enc_r = new Encoder(pio1, 0, pins_r, BOARD_LAST_PIN);
+    pin_pair pins_r = {
+        BOARD_RIGHT_ENCODER_OUT_A,
+        BOARD_RIGHT_ENCODER_OUT_B,
+    };
+
+    enc_l = new Encoder(pio0, 0, pins_l, BOARD_LAST_PIN, NORMAL_DIR, BOARD_ENCODER_CPR);
+    enc_r = new Encoder(pio1, 0, pins_r, BOARD_LAST_PIN, NORMAL_DIR, BOARD_ENCODER_CPR);
 
     enc_l->init();
     enc_r->init();
@@ -21,16 +28,11 @@ void Gamepad::fetch()
 {
 
     // clang-format off
-    uint32_t values = ~gpio_get_all();
+    values = ~gpio_get_all();
 
-    hats = 0
-        // | ((values & (1 << 17) ? BUTTON_UP : 0))
-        // | ((values & (1 << 16) ? BUTTON_DOWN : 0))
-        // | ((values & (1 << 14) ? BUTTON_LEFT : 0))
-        // | ((values & (1 << 15) ? BUTTON_RIGHT : 0))
-    ;
+    hats = 0;
 
-     buttons = 0
+    buttons = 0
         | ((values & (1 << 2) ? BUTTON_01 : 0))
         | ((values & (1 << 3) ? BUTTON_02 : 0))
         | ((values & (1 << 4) ? BUTTON_03 : 0))
@@ -79,11 +81,6 @@ bool Gamepad::pressedButton(uint32_t button)
 }
 
 // clang-format off
-bool Gamepad::pressedUp()     { return pressedButton(BUTTON_UP); }
-bool Gamepad::pressedDown()   { return pressedButton(BUTTON_DOWN); }
-bool Gamepad::pressedLeft()   { return pressedButton(BUTTON_LEFT); }
-bool Gamepad::pressedRight()  { return pressedButton(BUTTON_RIGHT); }
-
 bool Gamepad::pressedB1()     { return pressedButton(BUTTON_01); }
 bool Gamepad::pressedB2()     { return pressedButton(BUTTON_02); }
 bool Gamepad::pressedB3()     { return pressedButton(BUTTON_03); }

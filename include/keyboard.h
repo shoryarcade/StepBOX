@@ -5,7 +5,7 @@
 
 class Keyboard : public Device
 {
-    uint32_t keys;
+    uint8_t keycode[6] = {0};
 
     bool pressedB1;
     bool pressedB2;

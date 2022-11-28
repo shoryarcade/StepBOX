@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-#include <map>
+
 #include "device.h"
 #include "encoder.hpp"
 
@@ -10,16 +10,6 @@ using namespace encoder;
 
 #define GAMEPAD_NUMBER_OF_HATS 4
 #define GAMEPAD_NUMBER_OF_BUTTONS 17
-
-#define BUTTON_UP GAMEPAD_HAT_UP
-#define BUTTON_DOWN GAMEPAD_HAT_DOWN
-#define BUTTON_LEFT GAMEPAD_HAT_LEFT
-#define BUTTON_RIGHT GAMEPAD_HAT_RIGHT
-
-#define STICK1_UP GAMEPAD_BUTTON_Y
-#define STICK1_DOWN GAMEPAD_BUTTON_Y
-#define STICK1_LEFT GAMEPAD_BUTTON_X
-#define STICK1_RIGHT GAMEPAD_BUTTON_X
 
 #define BUTTON_01 GAMEPAD_BUTTON_0
 #define BUTTON_02 GAMEPAD_BUTTON_1
@@ -85,7 +75,6 @@ using namespace encoder;
 
 class Gamepad : public Device
 {
-    int8_t horizontal, vertical;
     uint32_t hats, buttons;
     Encoder *enc_l, *enc_r;
 
@@ -98,11 +87,6 @@ public:
     void report();
 
     bool pressedButton(uint32_t button);
-
-    bool pressedUp();
-    bool pressedDown();
-    bool pressedLeft();
-    bool pressedRight();
 
     bool pressedB1();
     bool pressedB2();
