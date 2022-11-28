@@ -112,7 +112,7 @@ Instructions for a Raspberry Pi Pico.
 
 ## Wiring Diagram
 
-![wiring diagram](assets/rp2040-diagram.svg)
+![wiring diagram](assets/rp2040-diagram.png)
 
 ## Support
 
