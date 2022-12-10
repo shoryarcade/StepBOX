@@ -12,7 +12,7 @@ public:
     uint32_t values;
 
     bool alive();
-    void listen();
+    void loop();
 
     virtual void setup() = 0;
 

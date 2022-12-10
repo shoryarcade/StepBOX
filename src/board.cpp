@@ -5,6 +5,8 @@
 
 Board::Board()
 {
+    lastRun = time_us_64();
+
     board_init();
     tusb_init();
 
@@ -26,8 +28,19 @@ bool Board::keyboardMode()
     return !gpio_get(BOARD_TOGGLE_MODE_PIN);
 }
 
-void Board::pooling()
+void Board::keepAlive()
 {
     // tinyusb
     tud_task();
+}
+
+bool Board::isReady()
+{
+    bool ready = (time_us_64() - this->lastRun) >= BOARD_DEBOUNCE_MS_TIME;
+
+    if (!ready)
+        return false;
+
+    lastRun = time_us_64();
+    return true;
 }

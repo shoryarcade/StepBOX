@@ -25,7 +25,7 @@ bool Device::alive(void)
     return true;
 }
 
-void Device::listen()
+void Device::loop()
 {
     if (alive())
     {

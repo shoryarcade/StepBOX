@@ -21,12 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include <math.h>
+#include <string>
+#include <vector>
 
+#include "pico/stdlib.h"
 #include "bsp/board.h"
+#include "pico/multicore.h"
+#include "pico/util/queue.h"
 
 #include "board.h"
 #include "gamepad.h"
 #include "keyboard.h"
+
+#include "module.h"
+#include "leds.h"
+
+queue_t stateQueue;
+
+void core1()
+{
+    vector<Module *> modules = {
+        new Leds(),
+    };
+
+    for (auto module : modules)
+        module->setup();
+
+    while (true)
+    {
+        static State snapshot;
+
+        if (queue_try_remove(&stateQueue, &snapshot))
+        {
+            for (auto module : modules)
+                module->run(&snapshot);
+        }
+    }
+}
 
 int main(void)
 {
@@ -34,6 +66,8 @@ int main(void)
 
     Gamepad *gamepad = new Gamepad();
     gamepad->setup();
+
+    queue_init(&stateQueue, sizeof(State), 1);
 
     Keyboard *keyboard;
     bool keyboardMode = board->keyboardMode();
@@ -46,13 +80,26 @@ int main(void)
         keyboard->setup();
     }
 
+    multicore_launch_core1(core1);
+
     while (true)
     {
-        board->pooling();
-        gamepad->listen();
+        board->keepAlive();
+
+        if (!board->isReady())
+            continue;
+
+        gamepad->loop();
 
         if (keyboardMode)
-            keyboard->listen();
+            keyboard->loop();
+
+        if (queue_is_empty(&stateQueue))
+        {
+            static State snapshot;
+            memcpy(&snapshot, gamepad->getState(), sizeof(State));
+            queue_try_add(&stateQueue, &snapshot);
+        }
     }
 
     return 0;
