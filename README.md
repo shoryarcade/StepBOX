@@ -97,14 +97,14 @@ We get around this problem by implementing a composite-device that behaves both 
 
 ## Installation
 
-Prebuilt `uf2` files are available in the [Releases](https://github.com/shorygame/StepBOX/releases) section for the following boards and controllers:
+Prebuilt `uf2` files are available in the [Releases](https://github.com/shoryarcade/StepBOX/releases) section for the following boards and controllers:
 
 - ~~[Shory Board]()~~ (**not available yet**)
 - [Raspberry Pi Pico]() and other RP2040 boards
 
 Instructions for a Raspberry Pi Pico.
 
-1. Download the latest `StepBOX.uf2` file from the [Releases](https://github.com/shorygame/StepBOX/releases) section for your board (e.g. `StepBOX-RaspberryPiPico.uf2` for the Raspberry Pi Pico);
+1. Download the latest `StepBOX.uf2` file from the [Releases](https://github.com/shoryarcade/StepBOX/releases) section for your board (e.g. `StepBOX-RaspberryPiPico.uf2` for the Raspberry Pi Pico);
 1. Unplug your Pico;
 1. Hold the BOOTSEL button on the Pico and plug into your computer. A new removable drive named `RPI-RP2` should appear in your file explorer;
 1. Drag and drop the `StepBOX.uf2` file into the removable drive. This will flash the board.
@@ -114,6 +114,49 @@ Instructions for a Raspberry Pi Pico.
 
 ![wiring diagram](assets/rp2040-diagram.png)
 
-## Support
+### StepBOX
 
-If you like to discuss features, issues or anything else related to Shory products please [create an issue](https://github.com/shorygame/StepBOX/issues/new) or join the [Shory Discord Channel](https://discord.gg/kGekqHdRrn).
+| Button | RP2040 Pin | Description |
+| :----: | :--------: | :---------: |
+| BT-01  |   PIN-02   |    Left     |
+| BT-02  |   PIN-03   |    Down     |
+| BT-03  |   PIN-04   |     Up      |
+| BT-04  |   PIN-05   |    Right    |
+| BT-05  |   PIN-06   |   Up-Left   |
+| BT-06  |   PIN-07   |  Up-Right   |
+| BT-07  |   PIN-08   |  Down-Left  |
+| BT-08  |   PIN-09   | Down-Right  |
+| BT-09  |   PIN-22   |   Middle    |
+| BT-10  |   PIN-10   |  Vol-L (-)  |
+| BT-11  |   PIN-11   |  Vol-L (+)  |
+| BT-12  |   PIN-12   |  Vol-R (-)  |
+| BT-13  |   PIN-13   |  Vol-R (+)  |
+| BT-14  |   PIN-21   |  Touchpad   |
+| BT-15  |   PIN-20   |    Share    |
+| BT-16  |   PIN-19   |   Select    |
+| BT-17  |   PIN-18   |    Start    |
+
+### ShoryVoltex
+
+| Button | RP2040 Pin |  Description   |
+| :----: | :--------: | :------------: |
+|  BT-A  |   PIN-02   |                |
+|  BT-B  |   PIN-03   |                |
+|  BT-C  |   PIN-04   |                |
+|  BT-D  |   PIN-05   |                |
+|  FX-L  |   PIN-08   |                |
+|  FX-R  |   PIN-09   |                |
+| START  |   PIN-18   |                |
+| VOL-L  |   PIN-14   | Output A (CLK) |
+| VOL-L  |   PIN-15   | Output B (DT)  |
+| VOL-R  |   PIN-16   | Output A (CLK) |
+| VOL-R  |   PIN-17   | Output B (DT)  |
+| AUX-1  |   PIN-19   |     Select     |
+| AUX-2  |   PIN-20   |     Share      |
+|        |   PIN-26   |    Left LED    |
+|        |   PIN-27   |   Right LED    |
+|        |   PIN-28   |   Middle LED   |
+
+## Support (Discord)
+
+If you like to discuss features, issues or anything else related to Shory products please [create an issue](https://github.com/shoryarcade/StepBOX/issues/new) or join the [Shory Discord Channel](https://discord.gg/kGekqHdRrn).

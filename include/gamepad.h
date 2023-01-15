@@ -73,18 +73,29 @@ using namespace encoder;
 // clang-format on
 
 
+class State {
+  public:
+    int32_t vol_l, vol_r = 0;
+    uint32_t hats, buttons;
+};
+
 class Gamepad : public Device
 {
-    uint32_t hats, buttons;
+private:
+    State *state = new State();
     Encoder *enc_l, *enc_r;
 
 public:
     Gamepad(){};
+    State * getState();
 
     bool alive();
     void setup();
     void fetch();
     void report();
+
+    int32_t turnedL();
+    int32_t turnedR();
 
     bool pressedButton(uint32_t button);
 

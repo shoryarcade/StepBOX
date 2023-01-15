@@ -5,6 +5,11 @@
 #include "gamepad.h"
 #include "usb_descriptors.h"
 
+State *Gamepad::getState()
+{
+    return state;
+}
+
 void Gamepad::setup()
 {
     pin_pair pins_l = {
@@ -18,7 +23,7 @@ void Gamepad::setup()
     };
 
     enc_l = new Encoder(pio0, 0, pins_l, BOARD_LAST_PIN, NORMAL_DIR, BOARD_ENCODER_CPR);
-    enc_r = new Encoder(pio1, 0, pins_r, BOARD_LAST_PIN, NORMAL_DIR, BOARD_ENCODER_CPR);
+    enc_r = new Encoder(pio0, 2, pins_r, BOARD_LAST_PIN, NORMAL_DIR, BOARD_ENCODER_CPR);
 
     enc_l->init();
     enc_r->init();
@@ -26,13 +31,15 @@ void Gamepad::setup()
 
 void Gamepad::fetch()
 {
-
     // clang-format off
     values = ~gpio_get_all();
 
-    hats = 0;
+    state->hats = 0;
 
-    buttons = 0
+    state->vol_l = enc_l->count();
+    state->vol_r = enc_r->count();
+
+    state->buttons = 0
         | ((values & (1 << 2) ? BUTTON_01 : 0))
         | ((values & (1 << 3) ? BUTTON_02 : 0))
         | ((values & (1 << 4) ? BUTTON_03 : 0))
@@ -67,17 +74,17 @@ void Gamepad::report()
             .hat = 0,
             .buttons = 0};
 
-    report.x = enc_l->count();
-    report.y = enc_r->count();
-    report.hat = hats;
-    report.buttons = buttons;
+    report.x = state->vol_l;
+    report.y = state->vol_r;
+    report.hat = state->hats;
+    report.buttons = state->buttons;
 
     tud_hid_report(REPORT_ID_GAMEPAD, &report, sizeof(report));
 }
 
 bool Gamepad::pressedButton(uint32_t button)
 {
-    return ((buttons & button) == button || (hats & button) == button);
+    return ((state->buttons & button) == button || (state->hats & button) == button);
 }
 
 // clang-format off
